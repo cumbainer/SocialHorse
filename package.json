@@ -1,20 +1,29 @@
+
+
 {
-      "name": "SocialHorse",
-      "version": "1.0.0",
-      "description": "",
-    "scripts": {
-         "build": "npm run compile && npm run declarations && mvn clean install compile build",
-         "test": "echo \"No test specified\" && exit 1",
-         "start": "node index.js"
-      },
-      "repository": {
-          "type": "git",
-          "url": "git+https://github.com/cumbainer/SocialHorse.git"
-      },
-      "author": "Vlad Shtaiier & Denys Leonenko",
-      "license": "ISC",
-      "bugs": {
-          "url": "https://github.com/cumbainer/SocialHorse/issues"
-      },
-      "homepage": "https://github.com/cumbainer/SocialHorse#readme"
+  "name": "socialhorse",
+  "version": "1.0.0",
+  "description": "a socialnetwork platform",
+  "main": "server.js",
+  "scripts": {
+    "serve": "nodemon --watch . server.js",
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cumbainer/SocialHorse.git"
+  },
+  "author": "Cyclic Software",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cumbainer/SocialHorse/issues"
+  },
+  "homepage": "https://github.com/cumbainer/SocialHorse#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
 }
