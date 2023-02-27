@@ -4,6 +4,7 @@
   "description": "a socialnetwork app with horses",
   "main": "SocialHorseApplication.java",
   "scripts": {
+    "start": "node SocialHorseApplication.java",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
