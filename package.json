@@ -2,9 +2,8 @@
   "name": "socialhorse",
   "version": "1.0.0",
   "description": "a socialnetwork app with horses",
-  "main": "SocialHorseApplication.java",
   "scripts": {
-    "start": "node SocialHorseApplication.java",
+    "start": "SocialHorseApplication.java",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
