@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notification</title>
+  <link rel="stylesheet" href="/notification.css">
+</head>
+<body>
+<div id="fb" th:each="req : ${requests}">
+  <div id="fb-top">
+    <p><b>Friend Requests</b></p>
+  </div>
+  <img th:src="@{|/images/${req.getReceiver().getImages().get(0).getId()}|}" height="100" width="100" alt="Image of woman">
+  <img th:if="" th:src="@{|/images/${req.getReceiver().getImages().get(0).getId()}|}" height="100" width="100" alt="Image of woman">
+  <p id="info"><b th:text="${req.getReceiver().getUsername()}"></b> <br></p>
+  <div id="button-block">
+    <div id="confirm">Confirm</div>
+    <div id="delete">Delete Request</div>
+  </div>
+</div>
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</body>
+</html>

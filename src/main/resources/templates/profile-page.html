@@ -1,0 +1,249 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.2.js"></script>
+<link rel="stylesheet" href="/profile-page.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+<body>
+<div class="just-for-background">
+<div class="container-fluid">
+    <nav class="navbar fixed-bottom navbar-light bg-light">
+
+        <div th:replace="~{search-bar}"></div>
+
+        <div class="nav-middle">
+            <a th:href="@{/feed}">
+                <i class="fa fa-home"></i>
+                <a th:href="@{|/users/${#authentication.principal.username}/friends|}">
+                    <i class="fa fa-user-friends"></i>
+                </a>
+            </a>
+
+            <a th:href="@{|/users/${#authentication.principal.username}|}" class="active" >
+                <i class="fa fa-users"></i>
+            </a>
+            <a th:href="@{/msg/chat}">
+                <i class="	fas fa-comment-alt"></i>
+            </a>
+        </div>
+
+        <div class="nav-right">
+            <span class="profile"></span>
+
+            <a href="#">
+                <i class="fa fa-bell"></i>
+            </a>
+
+        </div>
+    </nav>
+
+
+
+    <main>
+
+
+
+        <div id="profile-upper">
+            <div id="profile-banner-image">
+                <img th:if="${user.images.size() >= 2 and user.images.get(1).getName() == 'userImage'}" src="https://wallpapers.com/images/hd/hd-country-life-at-night-vvxmbqzkr4uumuni.jpg">
+                <img th:if="${user.images.size() >= 2 and user.images.get(1).getName() == 'imageBackground'}" th:src="@{|/images/${image.get(1).getId()}|}">
+                <img th:if="${user.images.size() == 1 || user.images.size() == 0 }" src="https://wallpapers.com/images/hd/hd-country-life-at-night-vvxmbqzkr4uumuni.jpg">
+            </div>
+
+            <div id="profile-d" >
+
+                <div id="profile-pic">
+                    <img class="image-for-profile" th:if="${user.images.size() == 1 and user.images.get(0).getName() == 'userImage'}" th:src="@{|/images/${image.get(0).getId()}|}">
+                    <img class="image-for-profile" th:if="${user.images.size() == 2 and user.images.get(1).getName() == 'backgroundImage'}" th:src="@{|/images/${image.get(0).getId()}|}">
+                    <img class="image-for-profile" th:if="${user.images.size() == 2 and user.images.get(1).getName() == 'userImage'}" th:src="@{|/images/${image.get(1).getId()}|}">
+                    <img class="image-for-profile" th:if="${user.images.size() == 2}" th:src="@{|/images/${image.get(0).getId()}|}">
+                    <img class="image-for-profile" th:if="${user.images.size()  >=  3 }" th:src="@{|/images/${image.get(image.size() - 1).getId()}|}">
+                    <img class="image-for-profile" th:if="${user.images.size() == 0}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png">
+                </div>
+
+                <!--            ToDo add if image is not present -> add custom image, like 'unavailable"-->
+                <div id="u-name" th:text="${user.getFirstName() + ' '+ user.getLastName()}"></div>
+            </div>
+            <div id="black-grd"></div>
+
+        </div>
+        <div id="main-content">
+            <div class="tb" th:switch="${user.getUsername() == #authentication.principal.username}">
+                <div class="td" id="l-col" th:switch="${username == #authentication.principal.username}">
+                    <button  th:if="${!ifFriend and !isAccount }" class="button-44" role="button" ><a style="text-decoration: none; color: white" th:href="@{|/friend/${#authentication.principal.username}/add/${user.username}|}">Add friend</a></button>
+                    <button  th:if="${ifFriend and !isAccount}" class="button-44" role="button" style="color: white; background: #7f8fa6" disabled>A friend</button>
+                    <div>
+                        <button th:case="true" class="button-44" role="button"><a th:href="@{|/users/${user.getId()}/update/|}" style="color: white; text-decoration: none">Update user</a></button>
+                    </div>
+                    <p th:text="${user.getEmail()}"></p>
+                    <p th:text="${user.getCountry()}"></p>
+                    <p th:if="${user.getAge() != 0}" th:text="${user.getAge() + ' years'}"></p>
+
+                    <div class="l-cnt">
+                        <div class="cnt-label">
+                            <i class="l-i" id="l-i-i"></i>
+                            <span th:text="${user.getBio()}"></span>
+                        </div>
+                        <div id="i-box">
+                            <div id="u-occ"></div>
+                        </div>
+                    </div>
+                    <div id="t-box">
+
+                        <a th:href="@{/logout}" style="color: black"><span id="t-more">Logout</span></a>
+
+                        <a th:href="@{/util/more}">More</a>
+                    </div>
+                </div>
+                <div class="td" id="m-col">
+
+                    <div class="post" th:each="post, iter : ${posts}">
+                        <div class="post-top" th:switch="${post[0].getUser().getUsername() == #authentication.principal.username}">
+                            <div class="dp">
+                                <img class="dp-profile-round-pic" th:if="${post[0].user.images.size() == 1 and post[0].user.images.get(0).getName() == 'userImage'}" th:src="@{|/images/${post[0].user.images.get(0).getId()}|}">
+                                <img class="dp-profile-round-pic" th:if="${post[0].user.images.size() == 2 and post[0].user.images.get(1).getName() == 'backgroundImage'}" th:src="@{|/images/${post[0].user.images.get(0).getId()}|}">
+                                <img class="dp-profile-round-pic" th:if="${post[0].user.images.size() == 2 and post[0].user.images.get(1).getName() == 'userImage'}" th:src="@{|/images/${post[0].user.images.get(1).getId()}|}">
+                                <img class="dp-profile-round-pic" th:if="${post[0].user.images.size() == 2}" th:src="@{|/images/${post[0].user.images.get(0).getId()}|}">
+                                <img class="dp-profile-round-pic" th:if="${post[0].user.images.size()  >=  3 }" th:src="@{|/images/${post[0].user.images.get(post[0].user.images.size() - 1).getId()}|}">
+                                <img class="dp-profile-round-pic" th:if="${post[0].user.images.size() == 0}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png">
+
+                            </div>
+                            <div class="post-info" >
+                                <a class="underline" th:href="@{|/users/${post[0].getUser().getUsername()}|}" style="text-decoration: #0e0e0e; color: #0e0e0e">
+                                    <p class="name" th:text="${post[0].getUser().getFirstName() + ' ' +  post[0].getUser().getLastName()}"></p></a>
+
+                                <span class="time" th:text="${post[0].getCreationDate()}" style = "position:relative; top: -20px;" ></span>
+
+                            </div>
+
+                            <div th:case="true">
+                                <a  th:href="@{|/posts/${post[0].id}/update/|}" style="position: relative;left: 291px"><i class="fas fa-edit"></i></a>
+                                <a  th:href="@{|/posts/${post[0].id}/delete/|}" style="position: relative;left: 291px"><i class="fas fa-trash"></i></a>
+                            </div>
+
+                        </div>
+
+                        <div class="post-content">
+                            <div th:text="${post[0].body}"></div>
+
+                            <div id="post-image" th:if="${post[0].getImage() != null}">
+                                <a th:href="'http://localhost:2402/post/images/' + ${post[0].getImage().id}" target="_blank">
+                                    <img th:src="@{|/post/images/${post[0].getImage().id}|}"/>
+                                    <img th:if="${post[0].getImage() == null}"/>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="post-bottom">
+
+                            <button class="like__btn">
+                                <span id="count" th:text="${post[0].likeCounter}"></span>
+                                <span id="icon" th:if="${post[0].liked}"><i class="fas fa-thumbs-up"></i></span>
+                                <a th:href="@{|/posts/${post[0].id}/like/|}" th:unless="${post[0].liked}"><i class="far fa-thumbs-up"></i></a>
+                            </button>
+
+                            <button class="like__btn-2">
+                                <span id="count-2" th:text="${post[0].dislikeCounter}"></span>
+                                <span id="icon-2" th:if="${post[0].disliked}"><i class="fas fa-thumbs-down"></i></span>
+                                <a th:href="@{|/posts/${post[0].id}/dislike/|}" th:unless="${post[0].disliked}"><i class="far fa-thumbs-down"></i></a>
+                            </button>
+
+
+
+                            <div class="">
+                                <a href="#" class="btn btn-outline-secondary text-none-decoration btn-comment border-0"><i
+                                        class="far fa-comment"></i> Comment</a>
+                            </div>
+                        </div>
+
+                        <div class="card mt-3 d-none card-comment">
+                            <div class="card-header">
+                                <textarea class="w-100 my-2" rows="1" placeholder="Write your comment..."></textarea>
+                                <button class="btn btn-outline-success btn-comment-save" th:attr="data-post-id=${post[0].getId()}">
+                                    Add comment
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item" th:each="comment, iter : ${post[1]}">
+                                        <i>
+                                            <small>
+                                                <small class="opacity-75"
+                                                       th:text="${comment[0].createdBy.firstName} + ' ' + ${comment[0].createdBy.lastName}"></small>
+                                            </small>
+                                        </i>
+                                        <br>
+                                        <span th:text="${comment[0].text}"></span>
+                                        <div class="btn-toolbar">
+
+                                            <div class="btn-group me-2" role="group" aria-label="Second group"
+                                                 th:attr="data-comment-id=${comment[0].getId()}">
+                                                <button type="button" class="btn btn-comment-reaction"
+                                                        th:attr="data-reaction=${comment[3]}"><i
+                                                        th:class="${comment[3] ? 'fas text-primary' : 'far'} + ' fa-thumbs-up'"></i>
+                                                    <span class="like-counter" th:text="${comment[1] > 0 ? comment[1] : ''}"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-comment-reaction"
+                                                        th:attr="data-reaction=${comment[4]}"><i
+                                                        th:class="${comment[4] ? 'fas text-primary' : 'far'} + ' fa-thumbs-down'"></i>
+                                                    <span class="dislike-counter" th:text="${comment[2] > 0 ? comment[2] : ''}"></span></button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </main>
+
+</div>
+</div>
+</body>
+
+<script src="/js/script.js"></script>
+<script src="https://use.fontawesome.com/fe459689b4.js"></script>
+<script>var btn1 = document.querySelector('#green');
+var btn2 = document.querySelector('#red');
+
+btn1.addEventListener('click', function() {
+
+    if (btn2.classList.contains('red')) {
+        btn2.classList.remove('red');
+    }
+    this.classList.toggle('green');
+
+});
+
+btn2.addEventListener('click', function() {
+
+    if (btn1.classList.contains('green')) {
+        btn1.classList.remove('green');
+    }
+    this.classList.toggle('red');
+
+});
+
+</script>
+
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</html>

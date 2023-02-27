@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <link rel="stylesheet" href="/login.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Login</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        body{
+            background-color: #F0F2F5;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .container{
+            position: absolute;
+            top: 30%;
+            left: 14%;
+            font-size: 25px;
+        }
+
+        .container h1{
+            color: #2C83F2;
+        }
+
+        header{
+            width: 320px;
+            height: 350px;
+            position: absolute;
+            top: 20%;
+            left: 57%;
+            background-color: white;
+        }
+
+        .box input{
+            width: 75%;
+            margin: 10px;
+            margin-top: 18px;
+            margin-left: 21px;
+            padding: 13px 18px;
+        }
+
+        .link{
+            width: 81%;
+            text-align: center;
+            background-color: #2C83f2;
+            margin-top: 10px;
+            margin-left: 23px;
+            padding: 11px;
+            border-radius: 7px;
+        }
+
+        .link a{
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        .link1 {
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .link1 a{
+            text-decoration: none;
+            color: #2C83f2;
+            font-size: 15px;
+        }
+
+        .link2{
+            width: 50%;
+            margin: 23%;
+            text-align: center;
+            margin-top: 40px;
+            background-color: #36A420;
+            padding: 10px;
+            border-radius: 7px;
+        }
+
+        .link2 a{
+            text-decoration: none;
+            color: white;
+
+        }@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        body{
+            background-color: #F0F2F5;
+            font-family: 'Roboto', sans-serif;
+            /*background-image: url("https://wallpaper.dog/large/10815967.jpg");*/
+            background-image: url("//wallpaper.dog/large/10815967.jpg");
+        }
+
+        .container{
+            position: absolute;
+            top: 30%;
+            left: 14%;
+            font-size: 25px;
+        }
+
+        .container h1{
+            color: #2C83F2;
+        }
+
+        header{
+            width: 320px;
+            height: 350px;
+            position: absolute;
+            top: 20%;
+            left: 57%;
+            /*background-color: transparent;*/
+
+            background-color: aqua;
+
+
+            background-color: rgba(0, 0, 0, .25);
+
+            color: white;
+
+            padding: 19px;
+        }
+
+        .box input{
+            width: 75%;
+            margin: 10px;
+            margin-top: 18px;
+            margin-left: 21px;
+            padding: 13px 18px;
+        }
+
+        .link{
+            width: 87%;
+            text-align: center;
+            background-color: #2C83f2;
+            margin-top: 10px;
+            margin-left: 23px;
+            padding: 0;
+            border-radius: 7px;
+        }
+
+        .link button{
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            padding: 11px;
+            width: 100%;
+            background: none;
+            border: 0;
+            cursor: pointer;
+
+        }
+
+        .link1 {
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .link1 a{
+            text-decoration: none;
+            color: #2C83f2;
+            font-size: 15px;
+        }
+
+        .link2{
+            width: 50%;
+            margin: 23%;
+            text-align: center;
+            margin-top: 40px;
+            background-color: #36A420;
+            padding: 10px;
+            border-radius: 7px;
+        }
+
+        .link2 a{
+            text-decoration: none;
+            color: white;
+
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Socialhorse</h1>
+        <p>Horses occasionally inspire people to<br> make impressive actions.</p>
+    </div>
+
+    <form th:action="@{/login}" method="post">
+
+
+
+        <header>
+            <div class="box">
+                <p th:if="${param.error}" class="alert alert-danger text-center">Username or password is not correct!</p>
+                <p th:if="${param.logout}" class="alert alert-info text-center">You have been logged out.</p>
+                <p th:if="${message}" th:text="${message}" class="alert alert-info text-center"></p>
+                <input type="text" name="username" id="email" placeholder="Username"><br>
+                <input type="password" name="password" id="password" placeholder="Password">
+            </div>
+
+            <div class="link">
+
+                <button type="submit">Login</button>
+            </div>
+
+            <div class="link1">
+                <label for="remember"> Remember me</label>
+                <input type="checkbox" name="remember" id="remember" />
+            </div>
+
+            <div class="link2">
+                <a th:href="@{/users/create}">Create account</a>
+            </div>
+        </header>
+    </form>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</body>
+</html>

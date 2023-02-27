@@ -1,0 +1,26 @@
+#chatBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+}
+
+#chatContent {
+    width: 80%;
+    height: 300px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    overflow-y: scroll;
+}
+
+#messageInput {
+    width: 70%;
+    margin-right: 10px;
+}
+
+#sendButton {
+    width: 20%;
+}
+

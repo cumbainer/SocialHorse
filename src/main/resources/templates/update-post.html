@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit profile</title>
+  <link rel="stylesheet" href="/update-user.css">
+
+</head>
+<body>
+<div class="container">
+  <div class="content">
+    <form th:action="@{|/posts/update/|}" th:object="${post}" enctype="multipart/form-data" method="POST">
+      <div class="user-details">
+        <input hidden type="number" th:field="*{id}" id="id" th:value="*{id}"/>
+        <div class="input-box">
+          <span class="details">First Name</span>
+          <input type="text" th:field="*{body}" placeholder="Enter body" required>
+        </div>
+        <div hidden class="input-box">
+          <span class="details">Creation date</span>
+          <input type="text" hidden th:field="*{creationDate}" th:value="${post.getCreationDate()}" placeholder="Enter body" required>
+        </div>
+        <div hidden class="input-box">
+          <span class="details">Owner</span>
+          <input type="number" hidden th:field="*{user.id}" th:value="${post.user.getId()}" placeholder="Enter body" required>
+        </div>
+      <div class="input-box">
+        <span class="details">Edit post image</span>
+        <input  type="file" name="postImage">
+      </div>
+      <div class="button" >
+        <input type="submit" value="Edit">
+      </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</body>
+</html>

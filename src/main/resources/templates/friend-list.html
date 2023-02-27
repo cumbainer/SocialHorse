@@ -1,0 +1,91 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<link rel="stylesheet" href="/friend-list.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.2.js"></script>
+<link rel="stylesheet" href="/profile-page.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<head>
+    <nav>
+        <div th:replace="~{search-bar}"></div>
+
+        <div class="nav-middle">
+            <a th:href="@{/feed}">
+                <i class="fa fa-home"></i>
+                <a href="#" class="active">
+                    <i class="fa fa-user-friends"></i>
+                </a>
+            </a>
+
+            <a th:href="@{|/users/${#authentication.principal.username}|}" >
+                <i class="fa fa-users"></i>
+            </a>
+            <a th:href="@{/msg/chat}">
+                <i class="	fas fa-comment-alt"></i>
+            </a>
+        </div>
+
+        <div class="nav-right">
+            <span class="profile"></span>
+
+            <a href="#">
+                <i class="fa fa-bell"></i>
+            </a>
+
+        </div>
+    </nav>
+</head>
+
+<body>
+    <div class="main-content">
+
+    <ul id='friend-list' >
+        <div>
+            <li class='friend selected' th:each="friend : ${user.getReceivedRequests()}">
+
+                <img th:if="${friend.sender.images.size() == 1 and friend.sender.images.get(0).getName() == 'userImage'}" th:src="@{|/images/${friend.sender.images.get(0).getId()}|}">
+                <img th:if="${friend.sender.images.size() == 2 and friend.sender.images.get(1).getName() == 'backgroundImage'}" th:src="@{|/images/${friend.sender.images.get(1).getId()}|}">
+                <img th:if="${friend.sender.images.size() == 2}" th:src="@{|/images/${friend.sender.images.get(1).getId()}|}">
+                <img th:if="${friend.sender.images.size()  >=  3 }" th:src="@{|/images/${friend.sender.images.get(friend.sender.images.size() - 1).getId()}|}">
+                <img th:if="${friend.sender.images.size() == 0}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png">
+                <a th:href="@{|/users/${friend.getSender().getUsername()}|}" style="text-decoration: #0e0e0e; color: #0e0e0e">
+                    <div class='name' th:text="${friend.getSender().getFirstName() + ' ' + friend.getSender().getLastName()}"></div>
+                </a>
+                <a th:href="@{|/friend/${friend.getId()}/delete|}" style="position: relative;left: 291px; text-decoration: #2C83f2"><i class="fas fa-trash"></i></a>
+
+            </li>
+            <li class='friend selected' th:each="friend : ${user.getSentRequest()}">
+
+                <img th:if="${friend.receiver.images.size() == 1 and friend.receiver.images.get(0).getName() == 'userImage'}" th:src="@{|/images/${friend.receiver.images.get(0).getId()}|}">
+                <img th:if="${friend.receiver.images.size() == 2 and friend.receiver.images.get(1).getName() == 'backgroundImage'}" th:src="@{|/images/${friend.receiver.images.get(1).getId()}|}">
+                <img th:if="${friend.receiver.images.size() == 2}" th:src="@{|/images/${friend.receiver.images.get(1).getId()}|}">
+                <img th:if="${friend.receiver.images.size()  >=  3 }" th:src="@{|/images/${friend.receiver.images.get(friend.receiver.images.size() - 1).getId()}|}">
+                <img th:if="${friend.receiver.images.size() == 0}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png">
+
+                <a th:href="@{|/users/${friend.getReceiver().getUsername()}|}" style="text-decoration: #0e0e0e; color: #0e0e0e">
+                    <div class='name' th:text="${friend.getReceiver().getFirstName() + ' ' + friend.getReceiver().getLastName()}"></div>
+                </a>
+                <a th:href="@{|/friend/${friend.getId()}/delete|}" style="position: relative;left: 291px; text-decoration: #2C83f2"><i class="fas fa-trash"></i></a>
+            </li>
+        </div>
+    </ul>
+    </div>
+</body>
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</html>
+

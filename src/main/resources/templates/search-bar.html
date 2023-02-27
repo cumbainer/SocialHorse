@@ -1,0 +1,51 @@
+<div class="nav-left position-relative d-flex flex-column">
+
+    <div class="card mt-3 mb-1 border-0">
+        <div class="header">
+            <input class="input-search border-0" style="background-color: #eee; border-radius: 25px; padding: 7px;"
+                   type="text" placeholder="Search Socialhorse`s..." data-search>
+        </div>
+    </div>
+    <div class="user-cards d-flex flex-column w-100">
+        <div class="card user-card mb-1" th:each="user, iter: ${users}" style="display: none;">
+            <a class="text-decoration-none text-muted" th:href="@{|/users/${user.username}|}">
+
+
+                <div class="header" data-header th:text="${user.firstName}+' '+${user.lastName}">
+
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const searchInput = document.querySelector("[data-search]")
+
+    let users = []
+
+
+    searchInput.addEventListener("input", (e) => {
+
+        const value = e.target.value.toLowerCase().trim()
+        let cardsList = document.querySelectorAll('.user-card')
+        if (value.length == 0) {
+            cardsList.forEach((card) => {
+                card.style.display = 'none';
+            })
+        } else {
+            cardsList.forEach((card) => {
+                let cardHeader = card.querySelector('[data-header]')
+                let text = cardHeader.innerHTML.toLowerCase()
+                if (text.includes(value)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            })
+        }
+    })
+
+
+</script>

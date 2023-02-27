@@ -1,0 +1,152 @@
+html, body {
+    font-family: sans-serif;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+#friend-list {
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 300px;
+    height: 100%;
+    background: #EEE;
+    list-style-type: none;
+}
+
+.friend {
+    width: 600px;
+    height: 70px;
+    background: #EEE;
+    border-bottom: 1px solid #DDD;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.friend img {
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+    border: 2px solid #AAA;
+    object-fit: cover;
+    margin-left: 5px;
+    margin-right: 10px;
+}
+
+.friend .name {
+    font-size: 18px;
+}
+
+.friend.selected {
+    background: white;
+    color: white;
+}
+.friend:hover{
+    background: #2196f3;
+}
+
+.friend.selected img {
+    border-color: white;
+}
+
+.friend:not(.selected):hover {
+    background: #DDD;
+}
+.main-content{
+    display: flex;
+    justify-content: center;
+}
+nav{
+    height:70px;
+    width:100%;
+    padding: 0 2rem;
+    display:flex;
+    justify-content: space-between;
+    background-color: #fff;
+    box-shadow: 0px 1px 3px #ccc;
+    position:sticky;
+    top:0;
+    z-index:99;
+}
+
+nav .nav-left, nav .nav-right{
+    display:flex;
+    align-items: center;
+}
+
+nav .nav-left > img{
+    width:40px;
+}
+
+nav .nav-left > input{
+    height:40px;
+    padding:5px 10px;
+    border:none;
+    border-radius: 25px;
+    outline:none;
+    background-color: #eee;
+    margin-left: 10px;
+}
+
+nav .nav-middle{
+    display:flex;
+    align-items:flex-end;
+    padding-bottom: 5px;
+}
+
+nav .nav-middle a{
+    text-decoration: none;
+    color:#333;
+    padding:10px;
+    margin:0px 10px;
+}
+
+nav .nav-middle a.active{
+    color:royalblue;
+    position:relative;
+}
+
+nav .nav-middle a.active::after{
+    content:'';
+    width:100%;
+    height:3px;
+    position:absolute;
+    bottom:0;
+    left:0;
+    background:royalblue;
+}
+
+nav .nav-middle a > i{
+    font-size: 25px;
+}
+
+nav .nav-right .profile, .container .left-panel .profile{
+    background: url('./images/dp.jpg');
+    height:30px;
+    width:30px;
+    background-size: cover;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+nav .nav-right a{
+    text-decoration: none;
+    color:#333;
+    height:40px;
+    width:40px;
+    border-radius: 50%;
+    background:#eee;
+    display:grid;
+    place-items: center;
+    margin-left:1rem;
+}
+
+nav .nav-right a > i{
+    font-size:18px;
+}
+nav .input-search:focus-visible{
+    outline-width: 0!important;
+}
