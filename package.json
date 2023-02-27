@@ -3,7 +3,7 @@
       "version": "1.0.0",
       "description": "",
     "scripts": {
-         "build": "npm run compile && npm run declarations",
+         "build": "npm run compile && npm run declarations && mvn clean install compile build",
          "test": "echo \"No test specified\" && exit 1",
          "start": "node index.js"
       },
