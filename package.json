@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "a socialnetwork app with horses",
   "scripts": {
-    "start": "mvn clean install compile build",
+    "start": "mvn clean install install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
