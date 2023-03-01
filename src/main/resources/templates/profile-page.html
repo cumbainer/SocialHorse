@@ -1,7 +1,4 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
-      crossorigin="anonymous" referrerpolicy="no-referrer" />
 <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,37 +16,35 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
 <body>
+<nav>
+
+    <div th:replace="~{search-bar}"></div>
+
+    <div class="nav-middle">
+        <a th:href="@{/feed}">
+            <i class="fa fa-home"></i>
+        </a>
+
+        <a th:href="@{|/users/${#authentication.principal.username}|}" class="active">
+            <i class="fa fa-users"></i>
+        </a>
+        <a>
+            <i class="	fas fa-comment-alt"></i>
+        </a>
+    </div>
+
+    <div class="nav-right">
+        <span class="profile"></span>
+
+        <a th:href="@{/friend/notification}">
+            <i class="fa fa-bell"></i>
+        </a>
+
+    </div>
+</nav>
 <div class="just-for-background">
 <div class="container-fluid">
-    <nav class="navbar fixed-bottom navbar-light bg-light">
 
-        <div th:replace="~{search-bar}"></div>
-
-        <div class="nav-middle">
-            <a th:href="@{/feed}">
-                <i class="fa fa-home"></i>
-                <a th:href="@{|/users/${#authentication.principal.username}/friends|}">
-                    <i class="fa fa-user-friends"></i>
-                </a>
-            </a>
-
-            <a th:href="@{|/users/${#authentication.principal.username}|}" class="active" >
-                <i class="fa fa-users"></i>
-            </a>
-            <a th:href="@{/msg/chat}">
-                <i class="	fas fa-comment-alt"></i>
-            </a>
-        </div>
-
-        <div class="nav-right">
-            <span class="profile"></span>
-
-            <a href="#">
-                <i class="fa fa-bell"></i>
-            </a>
-
-        </div>
-    </nav>
 
 
 

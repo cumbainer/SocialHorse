@@ -28,9 +28,6 @@
     <div class="nav-middle">
         <a th:href="@{/feed}" class="active">
             <i class="fa fa-home"></i>
-            <a th:href="@{|/users/${#authentication.principal.username}/friends|}">
-                <i class="fa fa-user-friends"></i>
-            </a>
         </a>
 
         <a th:href="@{|/users/${#authentication.principal.username}|}">
@@ -64,10 +61,14 @@
                 </div>
                 <p th:href="@{|/users/${#authentication.principal.username}|}" th:text="${#authentication.principal.fullName}"></p>
             </li>
-            <li>
-                <i class="fa fa-user-friends"></i>
-                <p>Friends</p>
-            </li>
+
+            <a style="color:black; text-decoration: none" th:href="@{|/users/${#authentication.principal.username}/friends|}">
+                <li>
+                    <i class="fa fa-user-friends"></i>
+                    <p>Friends</p>
+                </li>
+            </a>
+
             <li>
                 <i class="fa fa-users"></i>
                 <p>Groups</p>
