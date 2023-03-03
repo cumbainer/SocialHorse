@@ -56,14 +56,19 @@
             <div id="profile-banner-image">
                 <img th:if="${user.images.size() >= 2 and user.images.get(1).getName() == 'userImage'}" src="https://wallpapers.com/images/hd/hd-country-life-at-night-vvxmbqzkr4uumuni.jpg">
                 <img th:if="${user.images.size() >= 2 and user.images.get(1).getName() == 'imageBackground'}" th:src="@{|/images/${image.get(1).getId()}|}">
-                <img th:if="${user.images.size() == 1 || user.images.size() == 0 }" src="https://wallpapers.com/images/hd/hd-country-life-at-night-vvxmbqzkr4uumuni.jpg">
+                <img th:if="${user.images.size() == 1 and user.images.get(0).getName() == 'imageBackground'}" th:src="@{|/images/${image.get(0).getId()}|}">
+                <img th:if="${user.images.size() == 1 and user.images.get(0).getName() == 'userImage'}" src="https://wallpapers.com/images/hd/hd-country-life-at-night-vvxmbqzkr4uumuni.jpg">
+                <img th:if="${user.images.size() == 2 and user.images.get(1).getName() == 'userImage'}" th:src="@{|/images/${image.get(0).getId()}|}">
+                <img th:if="${user.images.size() > 2 and user.images.get(0).getName() == 'imageBackground'}" th:src="@{|/images/${image.get(0).getId()}|}">
+                <img th:if="${user.images.size() == 0 }" src="https://wallpapers.com/images/hd/hd-country-life-at-night-vvxmbqzkr4uumuni.jpg">
             </div>
 
             <div id="profile-d" >
 
                 <div id="profile-pic">
                     <img class="image-for-profile" th:if="${user.images.size() == 1 and user.images.get(0).getName() == 'userImage'}" th:src="@{|/images/${image.get(0).getId()}|}">
-                    <img class="image-for-profile" th:if="${user.images.size() == 2 and user.images.get(1).getName() == 'backgroundImage'}" th:src="@{|/images/${image.get(0).getId()}|}">
+                    <img class="image-for-profile" th:if="${user.images.size() == 1 and user.images.get(0).getName() == 'imageBackground'}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png">
+                    <img class="image-for-profile" th:if="${user.images.size() == 2 and user.images.get(1).getName() == 'imageBackground'}" th:src="@{|/images/${image.get(0).getId()}|}">
                     <img class="image-for-profile" th:if="${user.images.size() == 2 and user.images.get(1).getName() == 'userImage'}" th:src="@{|/images/${image.get(1).getId()}|}">
                     <img class="image-for-profile" th:if="${user.images.size() == 2}" th:src="@{|/images/${image.get(0).getId()}|}">
                     <img class="image-for-profile" th:if="${user.images.size()  >=  3 }" th:src="@{|/images/${image.get(image.size() - 1).getId()}|}">
@@ -82,7 +87,7 @@
                     <button  th:if="${!ifFriend and !isAccount }" class="button-44" role="button" ><a style="text-decoration: none; color: white" th:href="@{|/friend/${#authentication.principal.username}/add/${user.username}|}">Add friend</a></button>
                     <button  th:if="${ifFriend and !isAccount}" class="button-44" role="button" style="color: white; background: #7f8fa6" disabled>A friend</button>
                     <div>
-                        <button th:case="true" class="button-44" role="button"><a th:href="@{|/users/${user.getId()}/update/|}" style="color: white; text-decoration: none">Update user</a></button>
+                        <button th:case="true" class="button-44" role="button"><a th:href="@{|/users/${user.getId()}/update/|}" style="color: white; text-decoration: none">Edit</a></button>
                     </div>
                     <p th:text="${user.getEmail()}"></p>
                     <p th:text="${user.getCountry()}"></p>
@@ -100,7 +105,7 @@
                     <div id="t-box">
 
                         <a th:href="@{/logout}" style="color: black"><span id="t-more">Logout</span></a>
-
+                        <p th:text="${user.images.size()}"></p>
                         <a th:href="@{/util/more}">More</a>
                     </div>
                 </div>
@@ -110,6 +115,7 @@
                         <div class="post-top" th:switch="${post[0].getUser().getUsername() == #authentication.principal.username}">
                             <div class="dp">
                                 <img class="dp-profile-round-pic" th:if="${post[0].user.images.size() == 1 and post[0].user.images.get(0).getName() == 'userImage'}" th:src="@{|/images/${post[0].user.images.get(0).getId()}|}">
+                                <img class="dp-profile-round-pic" th:if="${post[0].user.images.size() == 1 and post[0].user.images.get(0).getName() == 'backgroundImage'}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png">
                                 <img class="dp-profile-round-pic" th:if="${post[0].user.images.size() == 2 and post[0].user.images.get(1).getName() == 'backgroundImage'}" th:src="@{|/images/${post[0].user.images.get(0).getId()}|}">
                                 <img class="dp-profile-round-pic" th:if="${post[0].user.images.size() == 2 and post[0].user.images.get(1).getName() == 'userImage'}" th:src="@{|/images/${post[0].user.images.get(1).getId()}|}">
                                 <img class="dp-profile-round-pic" th:if="${post[0].user.images.size() == 2}" th:src="@{|/images/${post[0].user.images.get(0).getId()}|}">

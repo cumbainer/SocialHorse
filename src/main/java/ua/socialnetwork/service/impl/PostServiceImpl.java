@@ -15,6 +15,7 @@ import ua.socialnetwork.repo.CommentReactionRepo;
 import ua.socialnetwork.repo.CommentRepo;
 import ua.socialnetwork.repo.PostRepo;
 import ua.socialnetwork.service.PostService;
+import ua.socialnetwork.service.UserService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,17 +27,14 @@ import java.util.List;
 @AllArgsConstructor
 public class PostServiceImpl implements PostService {
     private PostRepo postRepo;
+    private UserService userService;
     private ModelMapper modelMapper;
     private CommentRepo commentRepo;
     private CommentReactionRepo commentReactionRepo;
 
     @Override
-    public Post create(Post post) {
-        return postRepo.save(post);
-    }
-
-    @Override
-    public Post create(Post post, MultipartFile postImage) {
+    public PostDto create(PostDto postDto, String username, MultipartFile postImage) {
+        Post post = modelMapper.map(postDto, Post.class);
         PostImage image;
 
         if (postImage.getSize() != 0) {
@@ -44,16 +42,23 @@ public class PostServiceImpl implements PostService {
             post.setImageToPost(image);
         }
 
-        log.info("A post with id: " + post.getId() + " was created");
-
+        post.setUser(userService.returnUserByUsername(username));
         post.setCreationDate(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        log.info("A post was created by " + post.getUser().getFirstName() +" "+ post.getUser().getLastName());
+
+        postRepo.save(post);
+        return postDto;
+    }
+
+    @Override
+    public Post create(Post post) {
         return postRepo.save(post);
     }
 
     @Override
-    public Post update(PostDto postDto, MultipartFile postImage) {
-        PostImage image;
+    public PostDto update(PostDto postDto, MultipartFile postImage) {
         Post post = modelMapper.map(postDto, Post.class);
+        PostImage image;
 
         if (postImage.getSize() != 0) {
             image = toImageEntity(postImage);
@@ -62,8 +67,10 @@ public class PostServiceImpl implements PostService {
 
         log.info("A post with id: " + post.getId() + " was updated");
 
+        post.setCreationDate(postDto.getCreationDate());
         post.setEditionDate(LocalDateTime.now());
-        return postRepo.save(post);
+        postRepo.save(post);
+        return postDto;
     }
 
     @Override
@@ -82,9 +89,9 @@ public class PostServiceImpl implements PostService {
     public void delete(int id) {
         if (id != 0) {
             postRepo.deleteById(id);
-            log.info("A post with id" + id + "has been deleted");
+            log.error("An error occurred in Post deletion with id: " + id);
         }
-        log.error("An error occurred in Post deletion with id: " + id);
+        log.info("A post with id" + id + "has been deleted");
     }
 
     @Override

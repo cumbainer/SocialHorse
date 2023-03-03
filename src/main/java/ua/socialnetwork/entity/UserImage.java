@@ -2,15 +2,13 @@ package ua.socialnetwork.entity;
 
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 @Entity
-@Getter
-@Setter
+//@Getter
+//@Setter
+@Data
 @NoArgsConstructor
 @Table(name = "images")
 @EqualsAndHashCode

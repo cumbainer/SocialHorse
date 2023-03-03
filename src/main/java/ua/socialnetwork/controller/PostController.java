@@ -30,13 +30,13 @@ public class PostController {
 
     private final UserRepo userRepo;
 
-
     @GetMapping("/feed")
     public String getAll(@AuthenticationPrincipal SecurityUser authUser, Model model) {
 
-        model.addAttribute("imageIsPresent", authUser.getImages().size() > 0);
+        model.addAttribute("imageIsNotPresent", (authUser.getImages().size() == 0 ||
+                (authUser.getImages().size() == 1 && authUser.getImages().get(0).getName().equals("imageBackground"))));
         model.addAttribute("posts", postService.getAll());
-        model.addAttribute("newPost", new Post());
+        model.addAttribute("newPost", new PostDto());
         model.addAttribute("users", userService.getAll());
         model.addAttribute("posts", postService.postPreparation(userRepo.getById((int)authUser.getId())));
 
@@ -45,13 +45,12 @@ public class PostController {
 
     @PreAuthorize("hasRole('ROLE_ADMIM') or authentication.principal.username == #username")
     @PostMapping("/new/{username}/")
-    public String create(@PathVariable("username") String username, Post post,
+    public String create(@PathVariable("username") String username, PostDto postDto, BindingResult result,
                          @RequestParam(value = "postImage", required = false) MultipartFile postImage) {
 
-        post.setUser(userService.returnUserByUsername(username));
+        if (result.hasErrors()) return "redirect:/feed";
 
-        postService.create(post, postImage);
-        log.info("From PostController a Post has been created, id: " + post.getId());
+        postService.create(postDto, username ,postImage);
         return "redirect:/feed";
     }
 
@@ -70,7 +69,6 @@ public class PostController {
 
         if (result.hasErrors()) return "update-post";
 
-        postDto.setEditionDate(LocalDateTime.now());
         postService.update(postDto, postImage);
 
         return "redirect:/feed";

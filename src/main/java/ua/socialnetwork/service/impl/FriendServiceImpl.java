@@ -24,7 +24,7 @@ public class FriendServiceImpl implements FriendService {
     private ModelMapper modelMapper;
 
     @Override
-    public Friend create(FriendDto friendDto, String senderUsername, String receiverUsername) {
+    public FriendDto create(FriendDto friendDto, String senderUsername, String receiverUsername) {
         Friend friend = modelMapper.map(friendDto, Friend.class);
 
         User sender = userService.returnUserByUsername(senderUsername);
@@ -38,7 +38,8 @@ public class FriendServiceImpl implements FriendService {
         friend.setStatus(FriendStatus.FRIEND);
         friend.setSendingRequestDate(LocalDateTime.now());
         log.info("A friendship has created between [sender: " + sender.getId() + ", receiver: " + receiver.getId() + ']');
-        return friendRepo.save(friend);
+        friendRepo.save(friend);
+        return friendDto;
     }
 
     @Override
@@ -56,7 +57,6 @@ public class FriendServiceImpl implements FriendService {
         } catch (IllegalArgumentException ex) {
             return null;
         }
-
     }
 
     public FriendDto getById(int friendId) {

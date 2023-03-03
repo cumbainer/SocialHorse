@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
 
     @Override
-    public User create(UserDto userDto) {
+    public UserDto create(UserDto userDto) {
         User user = modelMapper.map(userDto, User.class);
 
         if (ifUsernameExists(user.getUsername())) {
@@ -41,55 +41,13 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encoder.encode(user.getPassword()));
         user.setCreationDate(LocalDateTime.now());
         user.setRole(UserRole.USER);
-        return userRepo.save(user);
+        userRepo.save(user);
+        return userDto;
     }
 
     @Override
-    public User create(UserDto userDto, MultipartFile userImage) {
+    public UserDto update(UserDto userDto, MultipartFile userImage) {
         User user = modelMapper.map(userDto, User.class);
-        UserImage image;
-
-        if (ifUsernameExists(user.getUsername())) {
-
-            throw new UserAlreadyExistsException("There already is an account with username: " + user.getUsername());
-        } else if (userImage.getSize() != 0) {
-            image = toImageEntity(userImage);
-            user.setProfileImageToUser(image);
-        }
-
-        log.info("New account was created with username: " + user.getUsername());
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setRole(UserRole.USER);
-        user.setCreationDate(LocalDateTime.now());
-        return userRepo.save(user);
-
-    }
-
-    @Override
-    public User create(UserDto userDto, MultipartFile userImage, MultipartFile imageBackground) {
-        User user = modelMapper.map(userDto, User.class);
-        UserImage image;
-        UserImage image2;
-
-        if (ifUsernameExists(user.getUsername())) {
-            throw new UserAlreadyExistsException("There already is an account with username: " + user.getUsername());
-        } else if (userImage.getSize() != 0) {
-            image = toImageEntity(userImage);
-            user.setProfileImageToUser(image);
-        } else if (imageBackground.getSize() != 0) {
-            image2 = toImageEntity(imageBackground);
-            user.setProfileImageToUser(image2);
-        }
-
-        log.info("New account was created with username: " + user.getUsername());
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setRole(UserRole.USER);
-        user.setCreationDate(LocalDateTime.now());
-        return userRepo.save(user);
-    }
-
-    @Override
-    public User update(User user, MultipartFile userImage) {
         UserImage image;
 
         if (user != null) {
@@ -98,36 +56,25 @@ public class UserServiceImpl implements UserService {
                 user.setProfileImageToUser(image);
             }
 
-            log.info("User with username: " + user.getUsername() + "has been updated");
+            log.info("User with username: " + user.getUsername() + " has been updated");
             user.setRole(UserRole.USER);
             user.setPassword(encoder.encode(user.getPassword()));
             user.setEditionDate(LocalDateTime.now());
             user.setCreationDate(user.getCreationDate());
-            return userRepo.save(user);
+            userRepo.save(user);
+            return userDto;
 
         }
         throw new NullEntityReferenceException("User can not be null");
     }
 
     @Override
-    public User update(User user) {
-
-        if (user != null) {
-            user.setRole(UserRole.USER);
-            user.setPassword(encoder.encode(user.getPassword()));
-            user.setCreationDate(user.getCreationDate());
-            user.setEditionDate(LocalDateTime.now());
-            return userRepo.save(user);
-
-        }
-        throw new NullEntityReferenceException("User can not be null");
-    }
-
-    @Override
-    public User update(User user, MultipartFile userImage, MultipartFile imageBackground) {
+    public UserDto update(UserDto userDto, MultipartFile userImage, MultipartFile imageBackground) {
+        User user = modelMapper.map(userDto, User.class);
 
         UserImage image;
         UserImage image2;
+
         if (user != null) {
             if (userImage.getSize() != 0) {
                 image = toImageEntity(userImage);
@@ -139,10 +86,10 @@ public class UserServiceImpl implements UserService {
             }
 
             user.setRole(UserRole.USER);
-            user.setPassword(encoder.encode(user.getPassword()));
             user.setCreationDate(user.getCreationDate());
             user.setEditionDate(LocalDateTime.now());
-            return userRepo.save(user);
+            userRepo.save(user);
+            return userDto;
         }
         throw new NullEntityReferenceException("User can not be null");
     }

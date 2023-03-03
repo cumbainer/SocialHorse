@@ -97,11 +97,11 @@ public class User {
         images.add(image);
     }
 
-//    public void setBackgroundImageToUser(UserImage image){
-//        image.setUser(this);
-//        if(this.getImages() != null && this.getImages().size() >= 1){
-//            images.add(0, image);
-//        }
-//        images.add(image);
-//    }
+    public void setBackgroundImageToUser(UserImage image){
+        image.setUser(this);
+        if(this.getImages() != null && this.getImages().size() >= 1){
+            images.add(0, image);
+        }
+        images.add(image);
+    }
 }

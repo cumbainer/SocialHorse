@@ -13,7 +13,7 @@ public class PostDto {
     private String body;
     private UserDto user;
     private List<Comment> comments;
-    private LocalDateTime creationDate;
+    private String creationDate;
     private LocalDateTime editionDate;
     private PostImage image;
     private int likeCounter;

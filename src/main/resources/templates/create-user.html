@@ -238,7 +238,7 @@
 <div class="container">
     <div class="title">Registration</div>
     <div class="content">
-        <form th:action="@{/users/create}" th:object="${user}" enctype="multipart/form-data" method="post">
+        <form th:action="@{/users/create}" enctype="multipart/form-data" th:object="${user}" method="post">
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">First Name</span>
@@ -262,7 +262,7 @@
                 </div>
                 <div class="input-box">
                     <span class="details">Password</span>
-                    <input name="p" type="password" th:field="*{password}" placeholder="Enter your password" id="password" required>
+                    <input type="password" th:field="*{password}" placeholder="Enter your password" id="password" required>
                     <div class="error-msg" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                 </div>
                 <div class="input-box">

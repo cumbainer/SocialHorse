@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,8 +33,8 @@ public class UserController {
     private final UserService userService;
     private final PostService postService;
     private final FriendService friendService;
-    private final ModelMapper modelMapper;
     private final UserRepo userRepo;
+
 
 
     @GetMapping("/create")
@@ -67,25 +68,21 @@ public class UserController {
         return "update-user";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #user.id")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #userDto.id")
     @PostMapping("/update")
-    public String update(@Validated User user, @RequestParam(value = "userImage", required = false) MultipartFile userImage,
+    public String update(@Valid UserDto userDto, @RequestParam(value = "userImage", required = false) MultipartFile userImage,
                          BindingResult result) {
 
         if (result.hasErrors()) return "update-user";
 
-        UserDto userDto = modelMapper.map(user, UserDto.class);
-
-        userService.update(user, userImage);
-        log.info("User with id: " + userDto.getId() + " has been updated");
+        userService.update(userDto, userImage);
         return "redirect:/users/" + userDto.getUsername();
     }
 
 
     @GetMapping("/create/continue/{username}")
     public String createSecondaryInfoForm(@PathVariable("username") String username, Model model) {
-
-        User user = modelMapper.map(userService.readByUsername(username), User.class);
+        User user = userService.returnUserByUsername(username);
 
         model.addAttribute("user", user);
 
@@ -93,7 +90,7 @@ public class UserController {
     }
 
     @PostMapping("/create/continue/{username}/")
-    public String createSecondaryInfo(@PathVariable("username") String username, @Validated User user,
+    public String createSecondaryInfo(@PathVariable("username") String username, UserDto user,
                                       @RequestParam(value = "userImage", required = false) MultipartFile userImage,
                                       @RequestParam(value = "imageBackground", required = false) MultipartFile imageBackground,
                                       BindingResult result) {
@@ -115,14 +112,14 @@ public class UserController {
 
     @GetMapping("/{username}")
     public String getUser(@PathVariable("username") String username, @AuthenticationPrincipal SecurityUser authUser, Model model) {
-        UserDto user = userService.readByUsername(username);
+        User user = userService.returnUserByUsername(username);
 
         FriendDto friend = friendService.getFriendByReceiverUsername(username, authUser.getUsername());
 
         model.addAttribute("ifFriend", friend != null);
         model.addAttribute("isAccount", authUser.getUsername().equals(username));
         model.addAttribute("imageIsPresent", authUser.getImages().size() > 0);
-        model.addAttribute("posts", postService.postPreparationForUser(userRepo.findById(user.getId()).orElse(null)));
+        model.addAttribute("posts", postService.postPreparationForUser(userRepo.findById((int)user.getId()).orElse(null)));
 
         model.addAttribute("user", userService.readByUsername(username));
         model.addAttribute("image", user.getImages());

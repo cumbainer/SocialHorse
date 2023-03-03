@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ua.socialnetwork.dto.UserDto;
 import ua.socialnetwork.entity.Friend;
 import ua.socialnetwork.entity.User;
 import ua.socialnetwork.entity.UserImage;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 @Slf4j
 @AllArgsConstructor
@@ -39,8 +41,7 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getUsername();
-    }
+        return user.getUsername();}
 
     @Override
     public boolean isAccountNonExpired() {
@@ -104,12 +105,14 @@ public class SecurityUser implements UserDetails {
 
     }
 
-    public Set<Friend> getReceivedRequests() {
-        return user.getReceivedRequests();
-    }
 
-    public Set<Friend> getSentRequest() {
-        return user.getSentRequest();
-    }
+
+//    public Set<Friend> getReceivedRequests() {
+//        return user.getReceivedRequests();
+//    }
+
+//    public Set<Friend> getSentRequest() {
+//        return user.getSentRequest();
+//    }
 
 }

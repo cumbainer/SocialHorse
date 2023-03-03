@@ -11,9 +11,9 @@ import java.util.List;
 public interface PostService {
     Post create(Post post);
 
-    Post create(Post postDto, MultipartFile postImage);
+    PostDto create(PostDto postDto, String username ,MultipartFile postImage);
 
-    Post update(PostDto postDto, MultipartFile multipartFile);
+    PostDto update(PostDto postDto, MultipartFile multipartFile);
     Post returnPostEntityById(Integer postId);
 
     void delete(int id);

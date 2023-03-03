@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit profile</title>
   <link rel="stylesheet" href="/update-user.css">
-
-
 </head>
 <body>
 <div class="container">
@@ -48,8 +46,7 @@
           <input type="text" th:field="*{bio}" placeholder="Enter your bio" id="bio">
         </div>
         <div class="input-box">
-          <span class="details">Confirm password or enter new</span>
-          <input type="password" th:field="*{password}" placeholder="Enter your password" id="password" required>
+          <input type="password" hidden th:field="*{password}" th:value="*{password}" placeholder="Enter your password" id="password">
         </div>
       </div>
       <div class="gender-details">

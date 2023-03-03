@@ -8,17 +8,12 @@ import java.util.List;
 
 public interface UserService {
 
-    User create(UserDto user);
+    UserDto create(UserDto user);
 
-    User create(UserDto user, MultipartFile userImage);
+    UserDto update(UserDto userDto, MultipartFile userImage);
 
-    User create(UserDto user, MultipartFile userImage, MultipartFile imageBackground);
+    UserDto update(UserDto userDto, MultipartFile userImage, MultipartFile imageBackground);
 
-    User update(User user, MultipartFile userImage);
-
-    User update(User user);
-
-    User update(User user, MultipartFile userImage, MultipartFile imageBackground);
     User returnUserByUsername(String username);
 
     void delete(int id);
