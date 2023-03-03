@@ -1,6 +1,7 @@
 package ua.socialnetwork.controller;
 
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -9,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String create(@Validated @ModelAttribute("user") UserDto userDto, BindingResult result, Model model) {
+    public String create(@Valid @ModelAttribute("user") UserDto userDto, BindingResult result, Model model) {
         if (result.hasErrors()) return "create-user";
 
         try {
@@ -70,9 +72,9 @@ public class UserController {
     public String update(@Validated User user, @RequestParam(value = "userImage", required = false) MultipartFile userImage,
                          BindingResult result) {
 
-        UserDto userDto = modelMapper.map(user, UserDto.class);
-
         if (result.hasErrors()) return "update-user";
+
+        UserDto userDto = modelMapper.map(user, UserDto.class);
 
         userService.update(user, userImage);
         log.info("User with id: " + userDto.getId() + " has been updated");
@@ -100,6 +102,7 @@ public class UserController {
 
         UserDto oldUser = userService.readByUsername(username);
 
+        user.setPassword(oldUser.getPassword());
         user.setFirstName(oldUser.getFirstName());
         user.setLastName(oldUser.getLastName());
         user.setUsername(oldUser.getUsername());

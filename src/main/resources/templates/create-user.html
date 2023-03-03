@@ -226,18 +226,9 @@
             color: #23b499;
         }
 
-
-
-        /*!*File upload css *!*/
-        /*input[type="file"] {*/
-        /*    display: none;*/
-        /*}*/
-        /*.custom-file-upload {*/
-        /*    border: 1px solid #ccc;*/
-        /*    display: inline-block;*/
-        /*    padding: 6px 12px;*/
-        /*    cursor: pointer;*/
-        /*}*/
+        .error-msg{
+            color: darkred;
+        }
     </style>
 
 
@@ -252,18 +243,31 @@
                 <div class="input-box">
                     <span class="details">First Name</span>
                     <input type="text" th:field="*{firstName}" placeholder="Enter your first name" required>
+                    <div class="error-msg" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
                 </div>
                 <div class="input-box">
                     <span class="details">Last Name</span>
                     <input type="text" th:field="*{lastName}" placeholder="Enter your last name" required>
+                    <div class="error-msg" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
                 </div>
                 <div class="input-box">
                     <span class="details">Username</span>
                     <input type="text" th:field="*{username}" placeholder="Enter your username" required>
+                    <div class="error-msg" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
                 </div>
                 <div class="input-box">
                     <span class="details">Email</span>
                     <input type="text" th:field="*{email}" placeholder="Enter your email" required>
+                    <div class="error-msg" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                </div>
+                <div class="input-box">
+                    <span class="details">Password</span>
+                    <input name="p" type="password" th:field="*{password}" placeholder="Enter your password" id="password" required>
+                    <div class="error-msg" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                </div>
+                <div class="input-box">
+                    <span class="details">Confirm Password</span>
+                    <input type="password" id="confirm_password" placeholder="Confirm your password" required>
                 </div>
 
             </div>
@@ -277,6 +281,30 @@
     </div>
 </div>
 
+
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+<script>
+    var password = document.getElementById("password")
+        , confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword(){
+        if(password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+
+    function validateForm() {
+        var x = document.forms["myForm"]["p"].value;
+        if (x == "") {
+            alert("Name must be filled out");
+            return false;
+        }
+    }
+</script>
 </body>
 </html>

@@ -2,6 +2,9 @@ package ua.socialnetwork.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -94,11 +97,11 @@ public class User {
         images.add(image);
     }
 
-    public void setBackgroundImageToUser(UserImage image){
-        image.setUser(this);
-        if(this.getImages() != null && this.getImages().size() >= 1){
-            images.add(0, image);
-        }
-        images.add(image);
-    }
+//    public void setBackgroundImageToUser(UserImage image){
+//        image.setUser(this);
+//        if(this.getImages() != null && this.getImages().size() >= 1){
+//            images.add(0, image);
+//        }
+//        images.add(image);
+//    }
 }

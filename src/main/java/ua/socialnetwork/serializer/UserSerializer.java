@@ -59,7 +59,7 @@ public class UserSerializer extends StdSerializer<User> {
         for(Post post : user.getPosts()){
             jgen.writeStartObject();
             jgen.writeStringField("body", post.getBody());
-            jgen.writeStringField("creationDate", post.getCreationDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+            jgen.writeStringField("creationDate", post.getCreationDate());
 
             jgen.writeArrayFieldStart("comments");
             for(Comment comment : post.getComments()){

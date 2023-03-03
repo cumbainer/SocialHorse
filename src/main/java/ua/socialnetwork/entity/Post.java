@@ -36,7 +36,7 @@ public class Post {
     private int dislikeCounter;
 
     @Column(name = "creationDate")
-    private LocalDateTime creationDate;
+    private String creationDate;
 
     @Column(name = "editionDate")
     @UpdateTimestamp

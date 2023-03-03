@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.socialnetwork.dto.UserDto;
+import ua.socialnetwork.entity.User;
 import ua.socialnetwork.service.UserService;
 
 
@@ -19,9 +20,9 @@ public class UserRestController {
     private UserService userService;
 
     @GetMapping(value = "/get/{username}", produces = "application/json")
-    public ResponseEntity<UserDto> getInfoByUsername(@PathVariable("username") String username){
+    public ResponseEntity<User> getInfoByUsername(@PathVariable("username") String username){
 
-        UserDto user = userService.readByUsername(username);
+        User user = userService.returnUserByUsername(username);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

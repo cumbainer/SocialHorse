@@ -334,14 +334,6 @@
           </div>
         </div>
 
-        <div class="input-box">
-          <span class="details">Password</span>
-          <input name="p" type="password" th:field="*{password}" placeholder="Enter your password" id="password" required>
-        </div>
-        <div class="input-box">
-          <span class="details">Confirm Password</span>
-          <input type="password" id="confirm_password" placeholder="Confirm your password" required>
-        </div>
       </div>
 
       <div>
@@ -396,27 +388,27 @@
     getImgData();
   });
 
-  var password = document.getElementById("password")
-          , confirm_password = document.getElementById("confirm_password");
-
-  function validatePassword(){
-    if(password.value != confirm_password.value) {
-      confirm_password.setCustomValidity("Passwords Don't Match");
-    } else {
-      confirm_password.setCustomValidity('');
-    }
-  }
-
-  password.onchange = validatePassword;
-  confirm_password.onkeyup = validatePassword;
-
-  function validateForm() {
-    var x = document.forms["myForm"]["p"].value;
-    if (x == "") {
-      alert("Name must be filled out");
-      return false;
-    }
-  }
+  // var password = document.getElementById("password")
+  //         , confirm_password = document.getElementById("confirm_password");
+  //
+  // function validatePassword(){
+  //   if(password.value != confirm_password.value) {
+  //     confirm_password.setCustomValidity("Passwords Don't Match");
+  //   } else {
+  //     confirm_password.setCustomValidity('');
+  //   }
+  // }
+  //
+  // password.onchange = validatePassword;
+  // confirm_password.onkeyup = validatePassword;
+  //
+  // function validateForm() {
+  //   var x = document.forms["myForm"]["p"].value;
+  //   if (x == "") {
+  //     alert("Name must be filled out");
+  //     return false;
+  //   }
+  // }
 </script>
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </body>

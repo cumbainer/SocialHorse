@@ -17,6 +17,7 @@ import ua.socialnetwork.repo.PostRepo;
 import ua.socialnetwork.service.PostService;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,6 @@ public class PostServiceImpl implements PostService {
     public Post create(Post post, MultipartFile postImage) {
         PostImage image;
 
-
         if (postImage.getSize() != 0) {
             image = toImageEntity(postImage);
             post.setImageToPost(image);
@@ -46,7 +46,7 @@ public class PostServiceImpl implements PostService {
 
         log.info("A post with id: " + post.getId() + " was created");
 
-        post.setCreationDate(LocalDateTime.now());
+        post.setCreationDate(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
         return postRepo.save(post);
     }
 
@@ -59,7 +59,6 @@ public class PostServiceImpl implements PostService {
             image = toImageEntity(postImage);
             post.setImageToPost(image);
         }
-
 
         log.info("A post with id: " + post.getId() + " was updated");
 

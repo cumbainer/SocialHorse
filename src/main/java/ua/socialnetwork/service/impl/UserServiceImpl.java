@@ -35,11 +35,10 @@ public class UserServiceImpl implements UserService {
 
         if (ifUsernameExists(user.getUsername())) {
             throw new UserAlreadyExistsException("There already is an account with username: " + user.getUsername());
-        } else if (user.getPassword() != null) {
-            user.setPassword(encoder.encode(user.getPassword()));
         }
 
-        log.info("New account was created with id: " + user.getId());
+        log.info("New account was created with username: " + user.getUsername());
+        user.setPassword(encoder.encode(user.getPassword()));
         user.setCreationDate(LocalDateTime.now());
         user.setRole(UserRole.USER);
         return userRepo.save(user);
@@ -57,9 +56,8 @@ public class UserServiceImpl implements UserService {
             image = toImageEntity(userImage);
             user.setProfileImageToUser(image);
         }
-        log.info("Added image: " + userImage.getName());
 
-        log.info("New account was created with id: " + user.getId());
+        log.info("New account was created with username: " + user.getUsername());
         user.setPassword(encoder.encode(user.getPassword()));
         user.setRole(UserRole.USER);
         user.setCreationDate(LocalDateTime.now());
@@ -74,7 +72,6 @@ public class UserServiceImpl implements UserService {
         UserImage image2;
 
         if (ifUsernameExists(user.getUsername())) {
-
             throw new UserAlreadyExistsException("There already is an account with username: " + user.getUsername());
         } else if (userImage.getSize() != 0) {
             image = toImageEntity(userImage);
@@ -84,9 +81,7 @@ public class UserServiceImpl implements UserService {
             user.setProfileImageToUser(image2);
         }
 
-        log.info("Added image: " + userImage.getName());
-        log.info("Added background image: " + imageBackground.getName());
-
+        log.info("New account was created with username: " + user.getUsername());
         user.setPassword(encoder.encode(user.getPassword()));
         user.setRole(UserRole.USER);
         user.setCreationDate(LocalDateTime.now());
@@ -103,6 +98,7 @@ public class UserServiceImpl implements UserService {
                 user.setProfileImageToUser(image);
             }
 
+            log.info("User with username: " + user.getUsername() + "has been updated");
             user.setRole(UserRole.USER);
             user.setPassword(encoder.encode(user.getPassword()));
             user.setEditionDate(LocalDateTime.now());
@@ -141,9 +137,6 @@ public class UserServiceImpl implements UserService {
                 image2 = toImageEntity(imageBackground);
                 user.setProfileImageToUser(image2);
             }
-
-            log.info("Added image: " + userImage.getName());
-            log.info("Added background image: " + imageBackground.getName());
 
             user.setRole(UserRole.USER);
             user.setPassword(encoder.encode(user.getPassword()));
