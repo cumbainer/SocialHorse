@@ -1,6 +1,7 @@
 package ua.socialnetwork.controller.rest;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +23,11 @@ public class UserRestController {
     @GetMapping(value = "/get/{username}", produces = "application/json")
     public ResponseEntity<User> getInfoByUsername(@PathVariable("username") String username){
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Access-Control-Allow-Origin", "*");
+
         User user = userService.returnUserByUsername(username);
 
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(user, headers, HttpStatus.OK);
     }
 }

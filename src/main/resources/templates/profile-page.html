@@ -54,7 +54,7 @@
 
         <div id="profile-upper">
             <div id="profile-banner-image">
-                <img th:if="${user.images.size() >= 2 and user.images.get(1).getName() == 'userImage'}" src="https://wallpapers.com/images/hd/hd-country-life-at-night-vvxmbqzkr4uumuni.jpg">
+<!--                <img th:if="${user.images.size() >= 2 and user.images.get(1).getName() == 'userImage'}" src="https://wallpapers.com/images/hd/hd-country-life-at-night-vvxmbqzkr4uumuni.jpg">-->
                 <img th:if="${user.images.size() >= 2 and user.images.get(1).getName() == 'imageBackground'}" th:src="@{|/images/${image.get(1).getId()}|}">
                 <img th:if="${user.images.size() == 1 and user.images.get(0).getName() == 'imageBackground'}" th:src="@{|/images/${image.get(0).getId()}|}">
                 <img th:if="${user.images.size() == 1 and user.images.get(0).getName() == 'userImage'}" src="https://wallpapers.com/images/hd/hd-country-life-at-night-vvxmbqzkr4uumuni.jpg">
@@ -105,7 +105,6 @@
                     <div id="t-box">
 
                         <a th:href="@{/logout}" style="color: black"><span id="t-more">Logout</span></a>
-                        <p th:text="${user.images.size()}"></p>
                         <a th:href="@{/util/more}">More</a>
                     </div>
                 </div>

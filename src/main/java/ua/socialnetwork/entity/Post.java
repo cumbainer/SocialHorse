@@ -19,7 +19,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
-    private long id;
+    private int id;
 
     @Column(name = "body")
     private String body;
@@ -51,6 +51,10 @@ public class Post {
     @OneToOne(cascade = CascadeType.ALL)
     private PostImage image;
 
+    public void setImageToPost(PostImage postImage) {
+        postImage.setPost(this);
+        image = postImage;
+    }
     @Override
     public String toString() {
         return "Post{" +
@@ -64,9 +68,5 @@ public class Post {
                 '}';
     }
 
-    public void setImageToPost(PostImage postImage) {
 
-        postImage.setPost(this);
-        image = postImage;
-    }
 }

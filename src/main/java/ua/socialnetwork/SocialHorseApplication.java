@@ -1,5 +1,6 @@
 package ua.socialnetwork;
 
+import org.hibernate.stat.Statistics;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +14,8 @@ public class SocialHorseApplication {
     }
 
     public static void main(String[] args) {
+
+
         SpringApplication.run(SocialHorseApplication.class, args);
     }
 

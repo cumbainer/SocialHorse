@@ -35,7 +35,7 @@ public class SecurityUser implements UserDetails {
         return user.getPassword();
     }
 
-    public long getId() {
+    public int getId() {
         return user.getId();
     }
 
@@ -104,15 +104,5 @@ public class SecurityUser implements UserDetails {
         return -1;
 
     }
-
-
-
-//    public Set<Friend> getReceivedRequests() {
-//        return user.getReceivedRequests();
-//    }
-
-//    public Set<Friend> getSentRequest() {
-//        return user.getSentRequest();
-//    }
 
 }

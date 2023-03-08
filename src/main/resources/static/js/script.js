@@ -123,6 +123,11 @@ function reactionClickHandler(e) {
 }
 
 
+/**************************************************************
+ *  image preview
+ *************************************************************/
+
+
 const chooseFile = document.getElementById("choose-file");
 const imgPreview = document.getElementById("img-preview");
 
